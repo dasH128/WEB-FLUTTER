@@ -1,12 +1,18 @@
+import 'dart:js_interop';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sistema_web/src/provider/login_provider.dart';
 import 'package:sistema_web/src/widgets/widgets.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Row(
         children: [
@@ -18,11 +24,12 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class _ContainerForm extends StatelessWidget {
+class _ContainerForm extends ConsumerWidget {
   const _ContainerForm();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    bool isLoading = ref.watch(isLoadingProvider);
     final color = Theme.of(context).colorScheme;
 
     return Container(
@@ -54,12 +61,47 @@ class _ContainerForm extends StatelessWidget {
             obscureText: true,
           ),
           const SizedBox(height: 30),
-          ButtonStyle1Widget(
-            text: 'Login',
-            onPressed: () {},
-          )
+          (isLoading)
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ButtonStyle1Widget(
+                  text: 'Login',
+                  onPressed: () async {
+                    // ref
+                    //     .read(isLoadingProvider.notifier)
+                    //     .update((state) => true);
+                    bool isValid =
+                        await login('jeferson322@gmail.com', '1234567890');
+                    if (isValid) {
+                      context.go('/dashboard');
+                    }
+                    // ref
+                    //     .read(isLoadingProvider.notifier)
+                    //     .update((state) => false);
+                  },
+                )
         ],
       ),
     );
+  }
+
+  Future<bool> login(correo, password) async {
+    // await Future.delayed(const Duration(seconds: 1));
+    try {
+      final dio = Dio();
+      final response = await dio.post('http://localhost:3000/api/auth/login',
+          data: {"email": correo, "password": password});
+      print('try');
+      print(response.data);
+    } catch (e) {
+      if (e is DioException) {
+        print(e.message);
+      } else {
+        print(e);
+      }
+    }
+
+    return true;
   }
 }

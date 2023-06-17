@@ -155,9 +155,7 @@ class _ContainerPuestoView extends StatelessWidget {
 }
 
 class _ContainerTurnoView extends StatelessWidget {
-  const _ContainerTurnoView({
-    super.key,
-  });
+  const _ContainerTurnoView();
 
   @override
   Widget build(BuildContext context) {
