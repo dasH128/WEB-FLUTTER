@@ -4,9 +4,18 @@ import 'package:go_router/go_router.dart';
 import 'package:sistema_web/src/entities/entities.dart';
 import 'package:sistema_web/src/widgets/widgets.dart';
 
-class ProgramationsScreen extends StatelessWidget {
-  const ProgramationsScreen({super.key});
+class ProgramationAddScreen extends StatefulWidget {
+  final PlanningEntity planning;
+  const ProgramationAddScreen({
+    super.key,
+    required this.planning,
+  });
 
+  @override
+  State<ProgramationAddScreen> createState() => _ProgramationAddScreenState();
+}
+
+class _ProgramationAddScreenState extends State<ProgramationAddScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +82,7 @@ class _TableDataPlanning extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    context.push('/dashboard/programacion-crear', extra: p);
+                    context.push('/dashboard/programacion-crear');
                   },
                   icon: const Icon(Icons.info),
                 )

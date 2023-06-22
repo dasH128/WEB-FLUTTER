@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:sistema_web/src/entities/entities.dart';
 import 'package:sistema_web/src/screens/screen.dart';
 
 final appRouter = GoRouter(
@@ -35,6 +36,12 @@ final appRouter = GoRouter(
           },
         ),
         GoRoute(
+          path: 'programacion-crear',
+          builder: (context, state) {
+            return ProgramationAddScreen(planning: (state.extra as PlanningEntity));
+          },
+        ),
+        GoRoute(
           path: 'programaciones',
           builder: (context, state) {
             return const ProgramationsScreen();
@@ -56,6 +63,12 @@ final appRouter = GoRouter(
           path: 'planificaciones',
           builder: (context, state) {
             return const PlanningScreen();
+          },
+        ),
+        GoRoute(
+          path: 'planificacion-crear',
+          builder: (context, state) {
+            return const PlanningAddScreen();
           },
         ),
         GoRoute(
