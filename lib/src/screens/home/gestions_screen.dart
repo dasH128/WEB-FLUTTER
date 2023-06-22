@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sistema_web/src/widgets/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sistema_web/src/provider/gestion_provider.dart';
 
 class GestionsScreen extends StatelessWidget {
   const GestionsScreen({super.key});
@@ -31,22 +32,22 @@ class GestionsScreen extends StatelessWidget {
   }
 }
 
-class _ContainerOpcionView extends StatelessWidget {
-  const _ContainerOpcionView({
-    super.key,
-  });
+class _ContainerOpcionView extends ConsumerWidget {
+  const _ContainerOpcionView();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var options = ref.watch(optionProvider);
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white),
       ),
-      child: const Column(
+      child: Column(
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(vertical: 8),
             child: Text(
               'OPCIONES',
@@ -57,20 +58,10 @@ class _ContainerOpcionView extends StatelessWidget {
             ),
           ),
           // SizedBox(height: 16),
-          ListTile(
-            title: Text('SIN OPCIÓN'),
-          ),
-          ListTile(
-            title: Text('OPCIÓN 1'),
-          ),
-          ListTile(
-            title: Text('OPCIÓN 2'),
-          ),
-          ListTile(
-            title: Text('OPCIÓN 3'),
-          ),
-          ListTile(
-            title: Text('OPCIÓN 4'),
+          ...options.map(
+            (o) => ListTile(
+              title: Text(o.nombre),
+            ),
           ),
         ],
       ),
@@ -78,22 +69,22 @@ class _ContainerOpcionView extends StatelessWidget {
   }
 }
 
-class _ContainerModalidadView extends StatelessWidget {
-  const _ContainerModalidadView({
-    super.key,
-  });
+class _ContainerModalidadView extends ConsumerWidget {
+  const _ContainerModalidadView();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var modalidades = ref.watch(modalityProvider);
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white),
       ),
-      child: const Column(
+      child: Column(
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(vertical: 8),
             child: Text(
               'MODALIDAD',
@@ -104,11 +95,10 @@ class _ContainerModalidadView extends StatelessWidget {
             ),
           ),
           // SizedBox(height: 16),
-          ListTile(
-            title: Text('PRESENCIAL'),
-          ),
-          ListTile(
-            title: Text('WAHA'),
+          ...modalidades.map(
+            (m) => ListTile(
+              title: Text(m.nombre),
+            ),
           ),
         ],
       ),
@@ -116,22 +106,22 @@ class _ContainerModalidadView extends StatelessWidget {
   }
 }
 
-class _ContainerPuestoView extends StatelessWidget {
-  const _ContainerPuestoView({
-    super.key,
-  });
+class _ContainerPuestoView extends ConsumerWidget {
+  const _ContainerPuestoView();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var puestos = ref.watch(positionProvider);
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white),
       ),
-      child: const Column(
+      child: Column(
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(vertical: 8),
             child: Text(
               'PUESTOS',
@@ -142,11 +132,10 @@ class _ContainerPuestoView extends StatelessWidget {
             ),
           ),
           // SizedBox(height: 16),
-          ListTile(
-            title: Text('PLATAFORMA ATENTO'),
-          ),
-          ListTile(
-            title: Text('ATENTO REMOTO'),
+          ...puestos.map(
+            (p) => ListTile(
+              title: Text(p.nombre),
+            ),
           ),
         ],
       ),
@@ -154,20 +143,22 @@ class _ContainerPuestoView extends StatelessWidget {
   }
 }
 
-class _ContainerTurnoView extends StatelessWidget {
+class _ContainerTurnoView extends ConsumerWidget {
   const _ContainerTurnoView();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var turnos = ref.watch(turnProvider);
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white),
       ),
-      child: const Column(
+      child: Column(
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(vertical: 8),
             child: Text(
               'TURNOS',
@@ -178,13 +169,11 @@ class _ContainerTurnoView extends StatelessWidget {
             ),
           ),
           // SizedBox(height: 16),
-          ListTile(
-            title: Text('MAÑANA'),
-            subtitle: Text('8:00-2:00'),
-          ),
-          ListTile(
-            title: Text('TARDE'),
-            subtitle: Text('8:00-2:00'),
+          ...turnos.map(
+            (t) => ListTile(
+              title: Text(t.nombre),
+              subtitle: Text('${t.inicio}-${t.fin}'),
+            ),
           ),
         ],
       ),

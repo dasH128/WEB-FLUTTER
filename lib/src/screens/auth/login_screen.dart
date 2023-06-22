@@ -37,7 +37,7 @@ class _ContainerForm extends ConsumerWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: color.onPrimary,
+        color: color.onSecondary,
       ),
       child: Column(
         children: [
@@ -68,17 +68,22 @@ class _ContainerForm extends ConsumerWidget {
               : ButtonStyle1Widget(
                   text: 'Login',
                   onPressed: () async {
-                    // ref
-                    //     .read(isLoadingProvider.notifier)
-                    //     .update((state) => true);
+                    ref
+                        .read(isLoadingProvider.notifier)
+                        .update((state) => true);
+                    await Future.delayed(const Duration(seconds: 1));
                     bool isValid =
                         await login('jeferson322@gmail.com', '1234567890');
                     if (isValid) {
+                      ref
+                          .read(isLoadingProvider.notifier)
+                          .update((state) => false);
                       context.go('/dashboard');
+                    } else {
+                      ref
+                          .read(isLoadingProvider.notifier)
+                          .update((state) => false);
                     }
-                    // ref
-                    //     .read(isLoadingProvider.notifier)
-                    //     .update((state) => false);
                   },
                 )
         ],
@@ -88,20 +93,21 @@ class _ContainerForm extends ConsumerWidget {
 
   Future<bool> login(correo, password) async {
     // await Future.delayed(const Duration(seconds: 1));
-    try {
-      final dio = Dio();
-      final response = await dio.post('http://localhost:3000/api/auth/login',
-          data: {"email": correo, "password": password});
-      print('try');
-      print(response.data);
-    } catch (e) {
-      if (e is DioException) {
-        print(e.message);
-      } else {
-        print(e);
-      }
-    }
+    // try {
+    //   final dio = Dio();
+    //   final response = await dio.post('http://localhost:3000/api/auth/login',
+    //       data: {"email": correo, "password": password});
 
+    //   print(response.data);
+    //   return true;
+    // } catch (e) {
+    //   if (e is DioException) {
+    //     print(e.message);
+    //   } else {
+    //     print(e);
+    //   }
+    //   return false;
+    // }
     return true;
   }
 }

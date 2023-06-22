@@ -42,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                     svgSrc: "assets/icons/menu_dashboard.svg",
                     option: 'PROGRAMACIÓN',
                     press: () {
-                      context.go('/dashboard/programations');
+                      context.go('/dashboard/programaciones');
                     },
                   ),
                   _MenuOption(

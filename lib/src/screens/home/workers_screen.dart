@@ -43,6 +43,7 @@ class WorkersScreen extends StatelessWidget {
         correo: 'jeferson1@gmail.com',
       ),
     ];
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Trabajadores'),

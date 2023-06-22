@@ -22,40 +22,41 @@ class WorkerAddScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Text(
+            const Text(
               'CREAR TRABAJADOR',
               style: TextStyle(
                 fontSize: 36,
               ),
             ),
-            SizedBox(height: 16),
-            TextFormFieldStyle1Widget(
+            const SizedBox(height: 16),
+            const TextFormFieldStyle1Widget(
               prefixIcon: Icon(Icons.person),
               label: 'Nombre',
               hint: 'Ingrese un nombre',
             ),
-            SizedBox(height: 16),
-            TextFormFieldStyle1Widget(
+            const SizedBox(height: 16),
+            const TextFormFieldStyle1Widget(
               prefixIcon: Icon(Icons.person),
               label: 'Apellidos',
               hint: 'Ingrese apellidos',
             ),
-            SizedBox(height: 16),
-            TextFormFieldStyle1Widget(
+            const SizedBox(height: 16),
+            const TextFormFieldStyle1Widget(
               prefixIcon: Icon(Icons.person),
               label: 'Dni',
               hint: 'Ingrese dni',
             ),
-            SizedBox(height: 16),
-            TextFormFieldStyle1Widget(
+            const SizedBox(height: 16),
+            const TextFormFieldStyle1Widget(
               prefixIcon: Icon(Icons.person),
               label: 'Correo',
               hint: 'Ingrese correo',
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ButtonStyle1Widget(
               text: 'Crear',
-              onPressed: () {
+              onPressed: () async{
+                await crearWorker();
                 context.pop();
               },
             )
@@ -64,4 +65,7 @@ class WorkerAddScreen extends StatelessWidget {
       ),
     );
   }
+
+  Future crearWorker() async {}
+  Future listarWorker() async {}
 }
