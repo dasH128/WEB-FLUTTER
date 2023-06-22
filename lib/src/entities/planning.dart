@@ -1,10 +1,8 @@
-import 'dart:ffi';
-
 class PlanningEntity {
   final String? id;
   final String asunto;
   final String fecha;
-  final Bool? estado;
+  final bool? estado;
   final List<List<String>>? call1;
   final List<List<String>>? parlo1;
   final List<List<String>>? call2;
