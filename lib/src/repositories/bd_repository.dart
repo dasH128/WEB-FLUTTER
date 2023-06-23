@@ -15,7 +15,8 @@ class BDRepository {
   Future getWorkers() async {
     return [];
   }
-
+  Future createWorker() async {}
+  
   Future createPlanning(PlanningEntity planning) async {
     Map<String, dynamic> data = {
       "asunto": planning.asunto,
@@ -30,5 +31,24 @@ class BDRepository {
 
   Future<List<PlanningEntity>> getPlaninnings() async {
     return [];
+  }
+
+  Future<bool> login(correo, password) async {
+    await Future.delayed(const Duration(seconds: 1));
+    try {
+      final response = await dio
+          .post('/auth/login', data: {"email": correo, "password": password});
+
+      print(response.data);
+      return true;
+    } catch (e) {
+      if (e is DioException) {
+        print(e.message);
+      } else {
+        print(e);
+      }
+      return false;
+    }
+    // return true;
   }
 }

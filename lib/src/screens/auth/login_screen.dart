@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sistema_web/src/provider/login_provider.dart';
+import 'package:sistema_web/src/repositories/bd_repository.dart';
 import 'package:sistema_web/src/widgets/widgets.dart';
 
 class LoginScreen extends ConsumerWidget {
@@ -73,7 +74,7 @@ class _ContainerForm extends ConsumerWidget {
                         .update((state) => true);
                     await Future.delayed(const Duration(seconds: 1));
                     bool isValid =
-                        await login('jeferson322@gmail.com', '1234567890');
+                        await login('', '');
                     if (isValid) {
                       ref
                           .read(isLoadingProvider.notifier)
@@ -92,22 +93,7 @@ class _ContainerForm extends ConsumerWidget {
   }
 
   Future<bool> login(correo, password) async {
-    // await Future.delayed(const Duration(seconds: 1));
-    // try {
-    //   final dio = Dio();
-    //   final response = await dio.post('http://localhost:3000/api/auth/login',
-    //       data: {"email": correo, "password": password});
-
-    //   print(response.data);
-    //   return true;
-    // } catch (e) {
-    //   if (e is DioException) {
-    //     print(e.message);
-    //   } else {
-    //     print(e);
-    //   }
-    //   return false;
-    // }
-    return true;
+    bool isValid =await BDRepository().login(correo, password);
+    return isValid;
   }
 }

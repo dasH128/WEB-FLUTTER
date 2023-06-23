@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sistema_web/src/repositories/bd_repository.dart';
 import 'package:sistema_web/src/widgets/widgets.dart';
 
 class WorkerAddScreen extends StatelessWidget {
@@ -55,7 +56,7 @@ class WorkerAddScreen extends StatelessWidget {
             const SizedBox(height: 16),
             ButtonStyle1Widget(
               text: 'Crear',
-              onPressed: () async{
+              onPressed: () async {
                 await crearWorker();
                 context.pop();
               },
@@ -66,6 +67,11 @@ class WorkerAddScreen extends StatelessWidget {
     );
   }
 
-  Future crearWorker() async {}
-  Future listarWorker() async {}
+  Future crearWorker() async {
+    await BDRepository().createWorker();
+  }
+
+  Future listarWorkers() async {
+    await BDRepository().getWorkers();
+  }
 }
