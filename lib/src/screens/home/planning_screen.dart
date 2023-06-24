@@ -94,7 +94,7 @@ class _TableDataPlanning extends StatelessWidget {
         ...plannings.map(
           (w) => DataRow(cells: [
             DataCell(Text(w.nombre)),
-            DataCell(Text(w.apellidos)),
+            DataCell(Text(w.apellido)),
             DataCell(Text(w.dni)),
             DataCell(Text(w.correo)),
             DataCell(Row(

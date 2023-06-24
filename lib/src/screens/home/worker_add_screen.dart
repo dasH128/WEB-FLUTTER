@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sistema_web/src/entities/entities.dart';
 import 'package:sistema_web/src/repositories/bd_repository.dart';
 import 'package:sistema_web/src/widgets/widgets.dart';
 

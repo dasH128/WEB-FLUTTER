@@ -12,8 +12,16 @@ class BDRepository {
     return [];
   }
 
-  Future getWorkers() async {
-    return [];
+  Future<List<WorkerEntity>> getWorkers() async {
+    try {
+      var response = await dio.get('/worker');
+      WorkerEntityResponse res = WorkerEntityResponse.fromJson(response.data);
+      List<WorkerEntity> list = res.operation;
+      return list;
+    } catch (e) {
+      print('e: ${e.toString()}');
+      return [];
+    }
   }
 
   Future createWorker(Map<String, String> data) async {
