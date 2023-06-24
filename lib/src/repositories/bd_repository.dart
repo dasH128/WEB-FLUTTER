@@ -15,8 +15,17 @@ class BDRepository {
   Future getWorkers() async {
     return [];
   }
-  Future createWorker() async {}
-  
+
+  Future createWorker(Map<String, String> data) async {
+    print(data);
+    try {
+      var f = await dio.post('/worker', data: data);
+      print('f: ${f.toString()}');
+    } catch (e) {
+      print('e: ${e.toString()}');
+    }
+  }
+
   Future createPlanning(PlanningEntity planning) async {
     Map<String, dynamic> data = {
       "asunto": planning.asunto,
