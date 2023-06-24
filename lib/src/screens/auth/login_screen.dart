@@ -32,7 +32,8 @@ class _ContainerForm extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool isLoading = ref.watch(isLoadingProvider);
     final color = Theme.of(context).colorScheme;
-
+    String passw = '';
+    String email = '';
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(16),
@@ -51,15 +52,21 @@ class _ContainerForm extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 40),
-          const TextFormFieldStyle1Widget(
-            prefixIcon: Icon(Icons.person_rounded),
+          TextFormFieldStyle1Widget(
+            prefixIcon: const Icon(Icons.person_rounded),
             label: 'Usuario',
+            onChanged: (p0) {
+              email = p0;
+            },
           ),
           const SizedBox(height: 30),
-          const TextFormFieldStyle1Widget(
-            prefixIcon: Icon(Icons.lock_rounded),
+          TextFormFieldStyle1Widget(
+            prefixIcon: const Icon(Icons.lock_rounded),
             label: 'Password',
             obscureText: true,
+            onChanged: (p0) {
+              passw = p0;
+            },
           ),
           const SizedBox(height: 30),
           (isLoading)
@@ -73,8 +80,7 @@ class _ContainerForm extends ConsumerWidget {
                         .read(isLoadingProvider.notifier)
                         .update((state) => true);
                     await Future.delayed(const Duration(seconds: 1));
-                    bool isValid =
-                        await login('', '');
+                    bool isValid = await login(email, passw);
                     if (isValid) {
                       ref
                           .read(isLoadingProvider.notifier)
@@ -93,7 +99,8 @@ class _ContainerForm extends ConsumerWidget {
   }
 
   Future<bool> login(correo, password) async {
-    bool isValid =await BDRepository().login(correo, password);
+    print('c:$correo - p:$password');
+    bool isValid = await BDRepository().login(correo, password);
     return isValid;
   }
 }
