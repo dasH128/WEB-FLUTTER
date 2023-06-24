@@ -46,8 +46,17 @@ class BDRepository {
     print(f);
   }
 
-  Future<List<PlanningEntity>> getPlaninnings() async {
-    return [];
+  Future<List<PlanningEntity>> getPlannings() async {
+    try {
+      var response = await dio.get('/planning');
+      PlanningEntityResponse res =
+          PlanningEntityResponse.fromJson(response.data);
+      List<PlanningEntity> list = res.operation;
+      return list;
+    } catch (e) {
+      print('e: ${e.toString()}');
+      return [];
+    }
   }
 
   Future<bool> login(correo, password) async {

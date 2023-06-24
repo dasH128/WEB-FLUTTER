@@ -70,7 +70,6 @@ class _PlanningAddScreenState extends State<PlanningAddScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print(listTabla1);
           guardar();
         },
         child: const Icon(Icons.save),
@@ -87,13 +86,21 @@ class _PlanningAddScreenState extends State<PlanningAddScreen> {
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
-              const TextFormFieldStyle1Widget(
-                prefixIcon: Icon(Icons.search_rounded),
+              TextFormFieldStyle1Widget(
+                prefixIcon: const Icon(Icons.search_rounded),
                 label: 'Asunto',
+                onChanged: (p0) {
+                  asunto = p0;
+                  setState(() {});
+                },
               ),
-              const TextFormFieldStyle1Widget(
-                prefixIcon: Icon(Icons.calendar_month_rounded),
+              TextFormFieldStyle1Widget(
+                prefixIcon: const Icon(Icons.calendar_month_rounded),
                 label: 'Fecha',
+                onChanged: (p0) {
+                  fecha = p0;
+                  setState(() {});
+                },
               ),
               const Padding(
                 padding: EdgeInsets.all(32.0),

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:data_table_2/data_table_2.dart';
+import 'package:sistema_web/src/entities/entities.dart';
 
 import 'package:sistema_web/src/entities/worker.dart';
+import 'package:sistema_web/src/repositories/bd_repository.dart';
 import 'package:sistema_web/src/widgets/widgets.dart';
 
 class PlanningScreen extends StatelessWidget {
@@ -21,7 +23,7 @@ class PlanningScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
               ),
@@ -54,7 +56,6 @@ class PlanningScreen extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class _TableDataPlanning extends StatelessWidget {
@@ -66,50 +67,63 @@ class _TableDataPlanning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DataTable2(
-      columnSpacing: 12,
-      horizontalMargin: 12,
-      minWidth: 600,
-      fixedColumnsColor: Colors.blue,
-      columns: const [
-        DataColumn2(
-          label: Text('Nombre'),
-          size: ColumnSize.L,
-        ),
-        DataColumn2(
-          label: Text('Apellidos'),
-        ),
-        DataColumn(
-          label: Text('DNI'),
-        ),
-        DataColumn(
-          label: Text('Correo'),
-        ),
-        DataColumn2(
-          fixedWidth: 100,
-          label: Text('Opciones'),
-        ),
-      ],
-      rows: [
-        ...plannings.map(
-          (w) => DataRow(cells: [
-            DataCell(Text(w.nombre)),
-            DataCell(Text(w.apellido)),
-            DataCell(Text(w.dni)),
-            DataCell(Text(w.correo)),
-            DataCell(Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    context.push('/dashboard/trabajadores-crear');
-                  },
-                  icon: const Icon(Icons.info),
-                )
-              ],
-            )),
-          ]),
-        ),
-      ],
-    );
+    return FutureBuilder<List<PlanningEntity>>(
+        future: getPlannings(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData != true) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          List<PlanningEntity> result = snapshot.data!;
+          
+          return DataTable2(
+            columnSpacing: 12,
+            horizontalMargin: 12,
+            minWidth: 600,
+            fixedColumnsColor: Colors.blue,
+            columns: const [
+              DataColumn2(
+                label: Text('Asunto'),
+                size: ColumnSize.L,
+              ),
+              DataColumn2(
+                label: Text('Fecha'),
+              ),
+              // DataColumn(
+              //   label: Text('DNI'),
+              // ),
+              // DataColumn(
+              //   label: Text('Correo'),
+              // ),
+              DataColumn2(
+                fixedWidth: 100,
+                label: Text('Opciones'),
+              ),
+            ],
+            rows: [
+              ...result.map(
+                (w) => DataRow(cells: [
+                  DataCell(Text(w.asunto)),
+                  DataCell(Text(w.fecha)),
+                  // DataCell(Text(w.dni)),
+                  // DataCell(Text(w.correo)),
+                  DataCell(Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          context.push('/dashboard/trabajadores-crear');
+                        },
+                        icon: const Icon(Icons.info),
+                      )
+                    ],
+                  )),
+                ]),
+              ),
+            ],
+          );
+        });
+  }
+
+  Future<List<PlanningEntity>> getPlannings() async {
+    return await BDRepository().getPlannings();
   }
 }
