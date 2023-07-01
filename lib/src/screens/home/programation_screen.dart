@@ -2,6 +2,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sistema_web/src/entities/entities.dart';
+import 'package:sistema_web/src/repositories/bd_repository.dart';
 import 'package:sistema_web/src/widgets/widgets.dart';
 
 class ProgramationsScreen extends StatelessWidget {
@@ -10,26 +11,43 @@ class ProgramationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('creaciòn')),
+      appBar: AppBar(
+        title: const Text('Programación'),
+      ),
       body: Container(
-        // color: Colors.amber,
         padding: const EdgeInsets.all(8),
         margin: const EdgeInsets.all(8),
         child: Column(
           children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 200,
-                  child: TextOptionStyle1Widget(
-                    label: 'hola',
-                    listOption: [],
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: const Row(
+                children: [
+                  Expanded(
+                    child: TextFormFieldStyle1Widget(
+                      prefixIcon: Icon(Icons.search_rounded),
+                      label: 'Buscar',
+                    ),
                   ),
-                ),
-              ],
+                  // IconButton(
+                  //   onPressed: () =>
+                  //       context.go('/dashboard/programacion-crear',),
+                  //   icon: const Icon(
+                  //     Icons.add,
+                  //     size: 30,
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
-            Text('a'),
-            Text('asd')
+            Expanded(
+              child: Container(
+                child: _TableDataPlanning(),
+              ),
+            ),
           ],
         ),
       ),
@@ -38,50 +56,58 @@ class ProgramationsScreen extends StatelessWidget {
 }
 
 class _TableDataPlanning extends StatelessWidget {
-  final List<PlanningEntity> plannings;
-  const _TableDataPlanning({
-    super.key,
-    required this.plannings,
-  });
+  const _TableDataPlanning();
 
   @override
   Widget build(BuildContext context) {
-    return DataTable2(
-      columnSpacing: 12,
-      horizontalMargin: 12,
-      minWidth: 600,
-      fixedColumnsColor: Colors.blue,
-      columns: const [
-        DataColumn2(
-          label: Text('Asunto'),
-          size: ColumnSize.L,
-        ),
-        DataColumn2(
-          label: Text('fecha'),
-        ),
-        DataColumn2(
-          fixedWidth: 100,
-          label: Text('Opciones'),
-        ),
-      ],
-      rows: [
-        ...plannings.map(
-          (p) => DataRow(cells: [
-            DataCell(Text(p.asunto)),
-            DataCell(Text(p.fecha)),
-            DataCell(Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    context.push('/dashboard/programacion-crear', extra: p);
-                  },
-                  icon: const Icon(Icons.info),
-                )
-              ],
-            )),
-          ]),
-        ),
-      ],
+    return FutureBuilder(
+      future: getPlannings(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData != true) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        List<PlanningEntity> result = snapshot.data!;
+
+        return DataTable2(
+            columnSpacing: 12,
+            horizontalMargin: 12,
+            minWidth: 600,
+            fixedColumnsColor: Colors.blue,
+            columns: [
+              DataColumn2(
+                label: Text('Asunto'),
+                size: ColumnSize.L,
+              ),
+              DataColumn2(
+                label: Text('Fecha'),
+              ),
+              DataColumn2(
+                fixedWidth: 100,
+                label: Text('Opciones'),
+              ),
+            ],
+            rows: [
+              ...result.map((w) => DataRow(cells: [
+                    DataCell(Text(w.asunto)),
+                    DataCell(Text(w.fecha)),
+                    DataCell(Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            context.push('/dashboard/programacion-crear',
+                                extra: w);
+                          },
+                          icon: const Icon(Icons.assignment),
+                        ),
+                      ],
+                    )),
+                  ])),
+            ]);
+      },
     );
+  }
+
+  Future<List<PlanningEntity>> getPlannings() async {
+    return await BDRepository().getPlannings();
   }
 }

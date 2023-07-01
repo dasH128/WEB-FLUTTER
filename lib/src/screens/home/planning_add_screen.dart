@@ -94,12 +94,21 @@ class _PlanningAddScreenState extends State<PlanningAddScreen> {
                   setState(() {});
                 },
               ),
-              TextFormFieldStyle1Widget(
+              TextDateStyle1Widget(
                 prefixIcon: const Icon(Icons.calendar_month_rounded),
-                label: 'Fecha',
-                onChanged: (p0) {
-                  fecha = p0;
-                  setState(() {});
+                value: fecha,
+                onTap: () async {
+                  DateTime? data = await showDatePicker(
+                    helpText: 'Fecha',
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2024),
+                  );
+                  if (data == null) return;
+                  setState(() {
+                    fecha = data.toIso8601String();
+                  });
                 },
               ),
               const Padding(
@@ -120,13 +129,6 @@ class _PlanningAddScreenState extends State<PlanningAddScreen> {
                 height: 300,
                 child: table2(),
               ),
-              // Container(
-              //   height: 400,
-              //   child: ListView.builder(
-              //     itemCount: 30,
-              //     itemBuilder: (BuildContext c, int i) => Text('i: $i'),
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -152,15 +154,34 @@ class _PlanningAddScreenState extends State<PlanningAddScreen> {
     }).toList();
   }
 
+  sumarTotal2() {
+    total2 = 0;
+    bool isVallid = true;
+    listTabla2.map((List<String> e) {
+      if (!isVallid) return;
+
+      String val = e[1];
+      int? n = int.tryParse(val);
+      if (n == null) {
+        total2 = 0;
+        isVallid = false;
+        return;
+      }
+      total2 = (total2 + n);
+    }).toList();
+  }
+
   guardar() async {
-    await BDRepository().createPlanning(PlanningEntity(
+    bool isCreated = await BDRepository().createPlanning(PlanningEntity(
       asunto: asunto,
       fecha: fecha,
       call1: listTabla1,
       parlo1: listTabla2,
     ));
-
-    context.pop();
+    // print(x);
+    if (isCreated == true) {
+      context.pop();
+    } else {}
   }
 
   Widget table1() {
@@ -257,13 +278,9 @@ class _PlanningAddScreenState extends State<PlanningAddScreen> {
                       prefixIcon: const Icon(Icons.numbers),
                       initialValue: listTabla2[index][1],
                       onChanged: (p0) {
-                        setState(() {
-                          int? n = int.tryParse(p0);
-                          total2 = (n == null) ? 0 : (total2 + n);
-                          listTabla2[index][1] = p0;
-                          setState(() {});
-                          //listTabla2[index][1] = p0;
-                        });
+                        listTabla2[index][1] = p0;
+                        sumarTotal2();
+                        setState(() {});
                       },
                     )),
                   ],
@@ -280,32 +297,12 @@ class _HeaderTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Text(
         '   $texto   $total',
         style: const TextStyle(fontSize: 32),
       ),
-    );
-    return Row(
-      children: [
-        SizedBox(
-          width: 300,
-          height: 68,
-          child: TextFormFieldStyle1Widget(
-            prefixIcon: const Icon(Icons.data_array),
-            label: texto,
-          ),
-        ),
-        SizedBox(
-          width: 300,
-          height: 68,
-          child: TextFormFieldStyle1Widget(
-            prefixIcon: const Icon(Icons.data_array),
-            label: '$total',
-          ),
-        ),
-      ],
     );
   }
 }

@@ -34,21 +34,37 @@ class BDRepository {
     }
   }
 
-  Future createPlanning(PlanningEntity planning) async {
+  Future<bool> createPlanning(PlanningEntity planning) async {
     Map<String, dynamic> data = {
       "asunto": planning.asunto,
       "fecha": planning.fecha,
-      "estado": "creado",
+      // "estado": "creado",
       "call1": planning.call1,
       "parlo1": planning.parlo1,
     };
-    var f = await dio.post('/planning', data: data);
-    print(f);
+    try {
+      Response<dynamic> res = await dio.post('/planning', data: data);
+      return res.data['operation'];
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> createProgramation(
+      {required String id,
+      required List<List<String>> call2,
+      required List<List<String>> parlo2}) async {
+    var x = await dio.put(
+      '/planning/:id/programing',
+    );
+    return true;
   }
 
   Future<List<PlanningEntity>> getPlannings() async {
     try {
-      var response = await dio.get('/planning');
+      var response = await dio.get('/planning', queryParameters: {
+        'estado': true,
+      });
       PlanningEntityResponse res =
           PlanningEntityResponse.fromJson(response.data);
       List<PlanningEntity> list = res.operation;
