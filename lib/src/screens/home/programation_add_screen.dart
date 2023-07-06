@@ -17,7 +17,7 @@ class ProgramationAddScreen extends StatefulWidget {
 }
 
 class _ProgramationAddScreenState extends State<ProgramationAddScreen> {
-  late int maxCAlL = 0;
+  late int maxCALL = 0;
   late int maxPARLO = 0;
 
   final List<String> calls = [
@@ -63,7 +63,7 @@ class _ProgramationAddScreenState extends State<ProgramationAddScreen> {
     super.initState();
     generateDatos1();
     generateDatos2();
-    maxCAlL = calcularTotalMaximoCall1();
+    maxCALL = calcularTotalMaximoCall1();
     maxPARLO = calcularTotalMaximoParlo1();
   }
 
@@ -106,7 +106,7 @@ class _ProgramationAddScreenState extends State<ProgramationAddScreen> {
                   padding: const EdgeInsets.all(16),
                   width: double.infinity,
                   child: Text(
-                    'TOTAL PROPUESTO ${maxCAlL + maxPARLO}',
+                    'TOTAL PROPUESTO ${maxCALL + maxPARLO}',
                     style: const TextStyle(fontSize: 22),
                   ),
                 ),
@@ -121,7 +121,7 @@ class _ProgramationAddScreenState extends State<ProgramationAddScreen> {
                   padding: EdgeInsets.all(32.0),
                   child: Divider(height: 2),
                 ),
-                _HeaderTable('CALL', total1, maxCAlL),
+                _HeaderTable('CALL', total1, maxCALL),
                 SizedBox(
                   height: 600,
                   child: table1(),
@@ -139,6 +139,40 @@ class _ProgramationAddScreenState extends State<ProgramationAddScreen> {
             )),
       ),
     );
+  }
+
+  sumarTotal1() {
+    total1 = 0;
+    bool isVallid = true;
+    listTabla1.map((List<String> e) {
+      if (!isVallid) return;
+
+      String val = e[1];
+      int? n = int.tryParse(val);
+      if (n == null) {
+        total1 = 0;
+        isVallid = false;
+        return;
+      }
+      total1 = (total1 + n);
+    }).toList();
+  }
+
+  sumarTotal2() {
+    total2 = 0;
+    bool isVallid = true;
+    listTabla2.map((List<String> e) {
+      if (!isVallid) return;
+
+      String val = e[1];
+      int? n = int.tryParse(val);
+      if (n == null) {
+        total2 = 0;
+        isVallid = false;
+        return;
+      }
+      total2 = (total2 + n);
+    }).toList();
   }
 
   guardar() async {
@@ -166,16 +200,17 @@ class _ProgramationAddScreenState extends State<ProgramationAddScreen> {
         ...List.generate(
           listTabla1.length,
           (index) => DataRow(cells: [
-            DataCell(Text(listTabla1[index].first)),
+            DataCell(Text(
+                '${listTabla1[index].first} - ${widget.planning.call1[index][1]}')),
             DataCell(TextFormFieldStyle1Widget(
               prefixIcon: const Icon(Icons.numbers),
               initialValue: listTabla1[index][1],
               onChanged: (p0) {
-                // listTabla1[index][1] = p0;
-                // print('listTabla1 ${listTabla1.toString()}');
-                // sumarTotal1();
-                // print('toal $total1');
-                // setState(() {});
+                listTabla1[index][1] = p0;
+                print('listTabla1 ${listTabla1.toString()}');
+                sumarTotal1();
+                print('toal $total1');
+                setState(() {});
               },
             )),
             DataCell(TextFormFieldStyle1Widget(
@@ -206,14 +241,15 @@ class _ProgramationAddScreenState extends State<ProgramationAddScreen> {
             listTabla2.length,
             (index) => DataRow(
                   cells: [
-                    DataCell(Text(listTabla2[index].first)),
+                    DataCell(Text(
+                        '${listTabla2[index].first} - ${widget.planning.parlo1[index][1]}')),
                     DataCell(TextFormFieldStyle1Widget(
                       prefixIcon: const Icon(Icons.numbers),
                       initialValue: listTabla2[index][1],
                       onChanged: (p0) {
-                        // listTabla2[index][1] = p0;
-                        // sumarTotal2();
-                        // setState(() {});
+                        listTabla2[index][1] = p0;
+                        sumarTotal2();
+                        setState(() {});
                       },
                     )),
                   ],

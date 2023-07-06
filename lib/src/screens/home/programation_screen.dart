@@ -89,7 +89,7 @@ class _TableDataPlanning extends StatelessWidget {
             rows: [
               ...result.map((w) => DataRow(cells: [
                     DataCell(Text(w.asunto)),
-                    DataCell(Text(w.fecha)),
+                    DataCell(Text(w.fecha.substring(0, 10))),
                     DataCell(Row(
                       children: [
                         (w.estado == true)
