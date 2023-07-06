@@ -24,7 +24,9 @@
 //
 //     final planningEntityResponse = planningEntityResponseFromJson(jsonString);
 
-import 'package:meta/meta.dart';
+// import 'dart:ffi';
+
+// import 'package:meta/meta.dart';
 import 'dart:convert';
 
 PlanningEntityResponse planningEntityResponseFromJson(String str) =>
@@ -59,6 +61,7 @@ class PlanningEntity {
   final String? id;
   final String fecha;
   final String asunto;
+  final bool? estado;
   final List<List<String>> call1;
   final List<List<String>> parlo1;
   final List<List<String>>? call2;
@@ -69,6 +72,7 @@ class PlanningEntity {
     this.id,
     required this.fecha,
     required this.asunto,
+    this.estado,
     required this.call1,
     required this.parlo1,
     this.call2,
@@ -80,6 +84,7 @@ class PlanningEntity {
         id: json["_id"],
         fecha: json["fecha"],
         asunto: json["asunto"],
+        estado: json["estado"],
         call1: List<List<String>>.from(
             json["call1"].map((x) => List<String>.from(x.map((x) => x)))),
         parlo1: List<List<String>>.from(
@@ -95,6 +100,7 @@ class PlanningEntity {
         "_id": id,
         "fecha": fecha,
         "asunto": asunto,
+        "estado": estado,
         "call1": List<dynamic>.from(
             call1.map((x) => List<dynamic>.from(x.map((x) => x)))),
         "parlo1": List<dynamic>.from(

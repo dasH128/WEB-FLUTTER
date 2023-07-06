@@ -54,16 +54,23 @@ class BDRepository {
       {required String id,
       required List<List<String>> call2,
       required List<List<String>> parlo2}) async {
-    var x = await dio.put(
-      '/planning/:id/programing',
-    );
-    return true;
+    try {
+      Response<dynamic> res = await dio.put('/planning/$id/programing', data: {
+        "call2": call2,
+        "parlo2": parlo2,
+      });
+      print(res);
+      return res.data['operation'];
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
   Future<List<PlanningEntity>> getPlannings() async {
     try {
       var response = await dio.get('/planning', queryParameters: {
-        'estado': true,
+        // 'estado': true,
       });
       PlanningEntityResponse res =
           PlanningEntityResponse.fromJson(response.data);

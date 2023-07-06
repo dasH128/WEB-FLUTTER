@@ -92,13 +92,22 @@ class _TableDataPlanning extends StatelessWidget {
                     DataCell(Text(w.fecha)),
                     DataCell(Row(
                       children: [
-                        IconButton(
-                          onPressed: () {
-                            context.push('/dashboard/programacion-crear',
-                                extra: w);
-                          },
-                          icon: const Icon(Icons.assignment),
-                        ),
+                        (w.estado == true)
+                            ? IconButton(
+                                onPressed: () {
+                                  context.push('/dashboard/programacion-crear',
+                                      extra: w);
+                                },
+                                icon: const Icon(Icons.assignment),
+                              )
+                            : IconButton(
+                                onPressed: () {
+                                  context.push(
+                                      '/dashboard/programacion-grafica',
+                                      extra: w);
+                                },
+                                icon: const Icon(Icons.dashboard),
+                              ),
                       ],
                     )),
                   ])),

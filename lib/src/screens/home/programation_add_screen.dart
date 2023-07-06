@@ -75,7 +75,23 @@ class _ProgramationAddScreenState extends State<ProgramationAddScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          guardar();
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Desea Guardar '),
+                content: const Text('Esta seguro de gaurdar la programación'),
+                actions: [
+                  TextButton(onPressed: () {}, child: Text('Cancel')),
+                  FilledButton(
+                      onPressed: () {
+                        guardar();
+                      },
+                      child: const Text('OK')),
+                ],
+              );
+            },
+          );
         },
         child: const Icon(Icons.save),
       ),
@@ -135,6 +151,7 @@ class _ProgramationAddScreenState extends State<ProgramationAddScreen> {
     if (isCreated == true) {
       context.pop();
     } else {}
+    context.pop();
   }
 
   Widget table1() {

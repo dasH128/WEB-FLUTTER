@@ -89,9 +89,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                   _MenuOption(
                     svgSrc: "assets/icons/menu_dashboard.svg",
-                    option: 'PUESTOS',
+                    option: 'DASHBOARD',
                     press: () {
-                      context.go('/dashboard/usuarios');
+                      context.go('/dashboard/grafica');
                     },
                   ),
                 ],

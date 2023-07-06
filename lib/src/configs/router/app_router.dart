@@ -38,7 +38,15 @@ final appRouter = GoRouter(
         GoRoute(
           path: 'programacion-crear',
           builder: (context, state) {
-            return ProgramationAddScreen(planning: (state.extra as PlanningEntity));
+            return ProgramationAddScreen(
+                planning: (state.extra as PlanningEntity));
+          },
+        ),
+        GoRoute(
+          path: 'programacion-grafica',
+          builder: (context, state) {
+            return ProgramationDashboardScreen(
+                planning: (state.extra as PlanningEntity));
           },
         ),
         GoRoute(
