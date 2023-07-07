@@ -30,3 +30,29 @@ var turnProvider = Provider<List<TurnEntity>>(
     TurnEntity(id: '2', nombre: 'TARDE', inicio: '8:00', fin: '2:00'),
   ],
 );
+
+var islandProvider = Provider<List<IslandEntity>>(
+  (ref) => [
+    IslandEntity(
+      nombre: 'FCOM CL',
+    ),
+    IslandEntity(
+      nombre: 'FCOM PE',
+    ),
+    IslandEntity(
+      nombre: 'FACL',
+    ),
+    IslandEntity(
+      nombre: 'FAPE',
+    ),
+    IslandEntity(
+      nombre: 'TOCL',
+    ),
+    IslandEntity(
+      nombre: 'TOPE',
+    ),
+    IslandEntity(
+      nombre: 'SOPE',
+    ),
+  ],
+);

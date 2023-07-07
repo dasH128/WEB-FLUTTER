@@ -66,13 +66,13 @@ class HomeScreen extends StatelessWidget {
                       context.go('/dashboard/trabajadores');
                     },
                   ),
-                  _MenuOption(
-                    svgSrc: "assets/icons/menu_doc.svg",
-                    option: 'TURNOS',
-                    press: () {
-                      context.go('/dashboard/usuarios');
-                    },
-                  ),
+                  // _MenuOption(
+                  //   svgSrc: "assets/icons/menu_doc.svg",
+                  //   option: 'TURNOS',
+                  //   press: () {
+                  //     context.go('/dashboard/usuarios');
+                  //   },
+                  // ),
                   _MenuOption(
                     svgSrc: "assets/icons/menu_dashboard.svg",
                     option: 'GESTIÓN',
@@ -82,9 +82,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                   _MenuOption(
                     svgSrc: "assets/icons/menu_dashboard.svg",
-                    option: 'MODALIDAD',
+                    option: 'ASISTENCIA',
                     press: () {
-                      context.go('/dashboard/usuarios');
+                      context.go('/dashboard/asistencia');
                     },
                   ),
                   _MenuOption(

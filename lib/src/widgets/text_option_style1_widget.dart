@@ -4,11 +4,13 @@ class TextOptionStyle1Widget<T> extends StatelessWidget {
   final List<T> listOption;
   final String label;
   final Widget? prefixIcon;
+  final Function()? onTap;
   const TextOptionStyle1Widget({
     super.key,
     required this.label,
     required this.listOption,
     this.prefixIcon = const Icon(Icons.widgets),
+    this.onTap,
   });
 
   @override
@@ -19,10 +21,11 @@ class TextOptionStyle1Widget<T> extends StatelessWidget {
         borderSide: BorderSide(color: color.primary));
 
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: TextFormField(
         enabled: false,
         decoration: InputDecoration(
+          prefixIcon: prefixIcon,
           label: Text(
             label,
             style: const TextStyle(color: Colors.white),
