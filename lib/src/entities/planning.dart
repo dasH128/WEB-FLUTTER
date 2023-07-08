@@ -60,6 +60,7 @@ class PlanningEntityResponse {
 class PlanningEntity {
   final String? id;
   final String fecha;
+  final String? fecha2;
   final String asunto;
   final bool? estado;
   final List<List<String>> call1;
@@ -71,6 +72,7 @@ class PlanningEntity {
   PlanningEntity({
     this.id,
     required this.fecha,
+    this.fecha2,
     required this.asunto,
     this.estado,
     required this.call1,
@@ -83,6 +85,7 @@ class PlanningEntity {
   factory PlanningEntity.fromJson(Map<String, dynamic> json) => PlanningEntity(
         id: json["_id"],
         fecha: json["fecha"],
+        fecha2: json["fecha2"],
         asunto: json["asunto"],
         estado: json["estado"],
         call1: List<List<String>>.from(
@@ -99,6 +102,7 @@ class PlanningEntity {
   Map<String, dynamic> toJson() => {
         "_id": id,
         "fecha": fecha,
+        "fecha2": fecha2,
         "asunto": asunto,
         "estado": estado,
         "call1": List<dynamic>.from(

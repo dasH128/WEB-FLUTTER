@@ -12,7 +12,6 @@ class ButtonStyle1Widget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
-    var colorPrimary = color.secondary;
 
     return MaterialButton(
       height: 48,

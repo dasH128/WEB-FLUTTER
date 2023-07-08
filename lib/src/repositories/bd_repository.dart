@@ -8,13 +8,25 @@ class BDRepository {
 
   Future test() async {
     var res = await dio.get('/pokemon/');
-    print(res);
     return [];
   }
 
   Future<List<WorkerEntity>> getWorkers() async {
     try {
       var response = await dio.get('/worker');
+      WorkerEntityResponse res = WorkerEntityResponse.fromJson(response.data);
+      List<WorkerEntity> list = res.operation;
+      return list;
+    } catch (e) {
+      print('e: ${e.toString()}');
+      return [];
+    }
+  }
+
+  Future<List<WorkerEntity>> getWorkersByIsla(String filter) async {
+    try {
+      var response =
+          await dio.get('/worker/isla', queryParameters: {'filter': filter});
       WorkerEntityResponse res = WorkerEntityResponse.fromJson(response.data);
       List<WorkerEntity> list = res.operation;
       return list;
@@ -38,6 +50,7 @@ class BDRepository {
     Map<String, dynamic> data = {
       "asunto": planning.asunto,
       "fecha": planning.fecha,
+      "fecha2": planning.fecha2,
       // "estado": "creado",
       "call1": planning.call1,
       "parlo1": planning.parlo1,
@@ -59,7 +72,6 @@ class BDRepository {
         "call2": call2,
         "parlo2": parlo2,
       });
-      print(res);
       return res.data['operation'];
     } catch (e) {
       print(e);
@@ -69,9 +81,7 @@ class BDRepository {
 
   Future<List<PlanningEntity>> getPlannings() async {
     try {
-      var response = await dio.get('/planning', queryParameters: {
-        // 'estado': true,
-      });
+      var response = await dio.get('/planning', queryParameters: {});
       PlanningEntityResponse res =
           PlanningEntityResponse.fromJson(response.data);
       List<PlanningEntity> list = res.operation;

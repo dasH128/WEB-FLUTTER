@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class TextDateStyle1Widget extends StatelessWidget {
   final String value;
-  final String? label;
+  final String label;
   final String? hint;
   final String? initialValue;
   final Widget? prefixIcon;
@@ -15,7 +15,7 @@ class TextDateStyle1Widget extends StatelessWidget {
   const TextDateStyle1Widget({
     super.key,
     required this.value,
-    this.label,
+    required this.label,
     this.hint,
     this.initialValue,
     this.enabled = true,
@@ -46,7 +46,7 @@ class TextDateStyle1Widget extends StatelessWidget {
               margin: const EdgeInsets.only(right: 8, left: 8),
               child: prefixIcon,
             ),
-            Text((value.isEmpty) ? 'Eliga fecha ' : value)
+            Text((value.isEmpty) ? label : value)
           ],
         ),
       ),

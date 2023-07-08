@@ -33,7 +33,8 @@ class _PlanningAddScreenState extends State<PlanningAddScreen> {
   int total1 = 0;
   int total2 = 0;
   String asunto = '';
-  String fecha = '';
+  DateTime? fecha = null;
+  DateTime? fecha2 = null;
   List<List<String>> listTabla1 = [];
   List<List<String>> listTabla2 = [];
 
@@ -94,12 +95,14 @@ class _PlanningAddScreenState extends State<PlanningAddScreen> {
                   setState(() {});
                 },
               ),
+              const SizedBox(height: 12),
               TextDateStyle1Widget(
+                label: 'Fecha inicial',
                 prefixIcon: const Icon(Icons.calendar_month_rounded),
-                value: fecha,
+                value: fecha?.toIso8601String() ?? '',
                 onTap: () async {
                   DateTime? data = await showDatePicker(
-                    helpText: 'Fecha',
+                    helpText: 'Fecha inicial',
                     context: context,
                     initialDate: DateTime.now(),
                     firstDate: DateTime.now(),
@@ -107,7 +110,26 @@ class _PlanningAddScreenState extends State<PlanningAddScreen> {
                   );
                   if (data == null) return;
                   setState(() {
-                    fecha = data.toIso8601String();
+                    fecha = data;
+                  });
+                },
+              ),
+              const SizedBox(height: 12),
+              TextDateStyle1Widget(
+                label: 'Fecha final',
+                prefixIcon: const Icon(Icons.calendar_month_rounded),
+                value: fecha2?.toIso8601String() ?? '',
+                onTap: () async {
+                  DateTime? data = await showDatePicker(
+                    helpText: 'Fecha final',
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2024),
+                  );
+                  if (data == null) return;
+                  setState(() {
+                    fecha2 = data;
                   });
                 },
               ),
@@ -174,7 +196,8 @@ class _PlanningAddScreenState extends State<PlanningAddScreen> {
   guardar() async {
     bool isCreated = await BDRepository().createPlanning(PlanningEntity(
       asunto: asunto,
-      fecha: fecha,
+      fecha: fecha?.toIso8601String() ?? '',
+      fecha2: fecha2?.toIso8601String() ?? '',
       call1: listTabla1,
       parlo1: listTabla2,
     ));

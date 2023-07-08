@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+
 import 'dart:convert';
 
 WorkerEntityResponse workerEntityResponseFromJson(String str) =>
@@ -35,6 +35,7 @@ class WorkerEntity {
   final String apellido;
   final String dni;
   final String correo;
+  final String? isla;
   final int? v;
 
   WorkerEntity({
@@ -43,6 +44,7 @@ class WorkerEntity {
     required this.apellido,
     required this.dni,
     required this.correo,
+    this.isla,
     this.v,
   });
 
@@ -52,6 +54,7 @@ class WorkerEntity {
         apellido: json["apellido"],
         dni: json["dni"],
         correo: json["correo"],
+        isla: json["isla"] ?? '',
         v: json["__v"],
       );
 
@@ -61,6 +64,7 @@ class WorkerEntity {
         "apellido": apellido,
         "dni": dni,
         "correo": correo,
+        "isla": isla,
         "__v": v,
       };
 }

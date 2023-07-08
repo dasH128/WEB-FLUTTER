@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sistema_web/src/entities/entities.dart';
-import 'package:sistema_web/src/provider/gestion_provider.dart';
+import 'package:sistema_web/src/provider/provider.dart';
 import 'package:sistema_web/src/repositories/bd_repository.dart';
 import 'package:sistema_web/src/widgets/widgets.dart';
 
@@ -14,6 +14,9 @@ class WorkerAddScreen extends ConsumerWidget {
     // final color = Theme.of(context).colorScheme;
     // var colorPrimary = color.primary;
     var island = ref.watch(islandProvider);
+    // var islaOfWorker = ref.watch(islaOfWorkerProvider);
+    // print('islaOF $islaOfWorker');
+    var islaOfWorker = ref.watch(islaOfWorkerProvider);
     final border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(15),
     );
@@ -21,6 +24,7 @@ class WorkerAddScreen extends ConsumerWidget {
     String apellido = '';
     String dni = '';
     String correo = '';
+    // String isla = '';
     return Scaffold(
       appBar: AppBar(),
       body: Container(
@@ -75,34 +79,53 @@ class WorkerAddScreen extends ConsumerWidget {
             const SizedBox(height: 16),
             TextOptionStyle1Widget(
               prefixIcon: const Icon(Icons.person),
-              label: 'Eliga isla',
-              listOption: ['asd', 'asdasd', 'asdasdasd'],
+              label: 'Isla: $islaOfWorker',
+              // listOption: ['asd', 'asdasd', 'asdasdasd'],
               onTap: () {
                 showDialog(
                     context: context,
                     builder: (context) {
+                      String? selectedRadio = '';
+                      if (islaOfWorker != '') {
+                        selectedRadio = islaOfWorker;
+                      }
+                      // var nombre = islaOfWorker;
                       return AlertDialog(
-                        title: const Text('Eliga una isla'),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ...island
-                                .map((e) => CheckboxListTile(
-                                    title: Text(e.nombre),
-                                    value: false,
-                                    onChanged: (v) {}))
-                                .toList()
-                          ],
+                        title: const Text('Eliga una isla '),
+                        content: StatefulBuilder(
+                          builder: (context, setState) {
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ...Iterable<int>.generate(island.length)
+                                    .map(
+                                      (i) => CheckboxListTile(
+                                        title: Text(island[i].nombre),
+                                        value:
+                                            (selectedRadio == island[i].nombre),
+                                        onChanged: (v) {
+                                          setState(() {
+                                            selectedRadio = island[i].nombre;
+                                          });
+                                        },
+                                      ),
+                                    )
+                                    .toList(),
+                              ],
+                            );
+                          },
                         ),
                         actions: [
                           TextButton(
                               onPressed: () {
                                 context.pop();
                               },
-                              child: Text('Cancel')),
+                              child: const Text('Cancel')),
                           FilledButton(
                               onPressed: () {
-                                // guardar();
+                                // selectedRadio = null;
+                                ref.read(islaOfWorkerProvider.notifier).state =
+                                    selectedRadio!;
                                 context.pop();
                               },
                               child: const Text('OK')),
@@ -120,6 +143,7 @@ class WorkerAddScreen extends ConsumerWidget {
                   'apellido': apellido,
                   'dni': dni,
                   'correo': correo,
+                  'isla': islaOfWorker,
                 };
                 await crearWorker(data);
                 context.pop();

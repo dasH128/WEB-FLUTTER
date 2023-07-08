@@ -56,3 +56,7 @@ var islandProvider = Provider<List<IslandEntity>>(
     ),
   ],
 );
+
+var rolProvider = Provider<List<String>>(
+  (ref) => ["admin", "supervisor"],
+);

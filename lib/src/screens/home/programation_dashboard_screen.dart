@@ -15,7 +15,9 @@ class ProgramationDashboardScreen extends StatelessWidget {
       fontSize: 20,
       fontWeight: FontWeight.bold,
     );
-    // var n = planning.call1.length;
+    var styleTitle = styleNormal.copyWith(
+      color: color.background,
+    );
     List<int> resul1 = [];
     List<int> resul2 = [];
     for (int i = 0; i < planning.call1.length; i++) {
@@ -37,48 +39,96 @@ class ProgramationDashboardScreen extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(8),
           margin: const EdgeInsets.all(8),
-          child: Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
-                width: 380,
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: color.onPrimaryContainer,
-                  borderRadius: BorderRadius.circular(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text('PLANIFICACIÓN FCOM',
+                        style: styleNormal.copyWith(
+                          color: color.onBackground,
+                        )),
+                    Text('DIFERENCIA',
+                        style: styleNormal.copyWith(
+                          color: color.onBackground,
+                        )),
+                    Text('ATENTO',
+                        style: styleNormal.copyWith(
+                          color: color.onBackground,
+                        )),
+                  ],
                 ),
-                child: Container(
-                  child: DataTable(
-                    columns: [
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            'VALOR',
-                            style: styleNormal.copyWith(
-                              color: color.background,
-                            ),
-                          ),
-                        ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: color.onPrimaryContainer,
+                        borderRadius: BorderRadius.circular(16),
                       ),
-                      DataColumn(
-                        label: Text(
-                          'DIFERENCIA',
-                          style: styleNormal.copyWith(
-                            color: color.background,
-                          ),
-                        ),
-                      )
-                    ],
-                    rows: [
-                      ...resul1
-                          .map(
-                            (e) => DataRow(
+                      child: DataTable(
+                        columns: [
+                          DataColumn(label: Text('ISLA', style: styleTitle)),
+                          DataColumn(label: Text('VALOR', style: styleTitle)),
+                        ],
+                        rows: [
+                          ...Iterable<int>.generate(resul1.length).map((i) {
+                            return DataRow(
                               cells: [
                                 DataCell(Center(
                                   child: Text(
-                                    '$e',
+                                    planning.call1[i][0],
                                     style: styleNormal.copyWith(
-                                      color: (e < 0)
+                                      color: color.background,
+                                    ),
+                                  ),
+                                )),
+                                DataCell(Center(
+                                  child: Text(
+                                    planning.call1[i][1],
+                                    style: styleNormal.copyWith(
+                                      color: color.background,
+                                    ),
+                                  ),
+                                )),
+                              ],
+                            );
+                          }).toList(),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: color.onPrimaryContainer,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: DataTable(
+                        columns: [
+                          DataColumn(
+                            label: Center(
+                              child: Text('VALOR', style: styleTitle),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text('DIFERENCIA', style: styleTitle),
+                          )
+                        ],
+                        rows: [
+                          ...Iterable<int>.generate(resul1.length).map((i) {
+                            return DataRow(
+                              cells: [
+                                DataCell(Center(
+                                  child: Text(
+                                    '${resul1[i]}',
+                                    style: styleNormal.copyWith(
+                                      color: (resul1[i] < 0)
                                           ? Colors.red
                                           : Colors.green[900],
                                     ),
@@ -86,75 +136,195 @@ class ProgramationDashboardScreen extends StatelessWidget {
                                 )),
                                 DataCell(
                                   Text(
-                                    (e < 0) ? 'FALTA QR' : 'RQ CONFORME',
+                                    (resul1[i] < 0)
+                                        ? 'FALTA QR'
+                                        : 'RQ CONFORME',
                                     style: styleNormal.copyWith(
-                                        color: (e < 0)
+                                        color: (resul1[i] < 0)
                                             ? Colors.red
                                             : Colors.green[900]),
                                   ),
                                 )
                               ],
-                            ),
-                          )
-                          .toList(),
-                    ],
-                  ),
+                            );
+                          }).toList(),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: color.onPrimaryContainer,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: DataTable(
+                        columns: [
+                          DataColumn(label: Text('ISLA', style: styleTitle)),
+                          DataColumn(label: Text('VALOR', style: styleTitle)),
+                        ],
+                        rows: [
+                          ...Iterable<int>.generate(resul1.length).map((i) {
+                            return DataRow(
+                              cells: [
+                                DataCell(Center(
+                                  child: Text(
+                                    planning.call2?[i][0] ?? '---',
+                                    style: styleNormal.copyWith(
+                                      color: color.background,
+                                    ),
+                                  ),
+                                )),
+                                DataCell(Center(
+                                  child: Text(
+                                    planning.call2?[i][1] ?? '---',
+                                    style: styleNormal.copyWith(
+                                      color: color.background,
+                                    ),
+                                  ),
+                                )),
+                              ],
+                            );
+                          }).toList(),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
               //
+              const SizedBox(height: 20),
               Container(
-                width: 370,
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: color.onPrimaryContainer,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Container(
-                  child: DataTable(
-                    columns: [
-                      DataColumn(
-                          label: Center(
-                        child: Text(
-                          'VALOR',
-                          style: styleNormal.copyWith(
-                            color: color.background,
-                          ),
-                        ),
-                      )),
-                      DataColumn(
-                          label: Text(
-                        'DIFERENCIA',
-                        style: styleNormal.copyWith(
-                          color: color.background,
-                        ),
-                      ))
-                    ],
-                    rows: [
-                      ...resul2
-                          .map(
-                            (e) => DataRow(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: color.onPrimaryContainer,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: DataTable(
+                        columns: [
+                          DataColumn(label: Text('ISLA', style: styleTitle)),
+                          DataColumn(label: Text('VALOR', style: styleTitle)),
+                        ],
+                        rows: [
+                          ...Iterable<int>.generate(resul2.length).map((i) {
+                            return DataRow(
                               cells: [
                                 DataCell(Center(
-                                  child: Text('$e',
-                                      style: styleNormal.copyWith(
-                                        color: (e < 0)
-                                            ? Colors.red
-                                            : Colors.green[900],
-                                      )),
+                                  child: Text(
+                                    planning.parlo1[i][0],
+                                    style: styleNormal.copyWith(
+                                      color: color.background,
+                                    ),
+                                  ),
                                 )),
-                                DataCell(Text(
-                                  (e < 0) ? 'FALTA QR' : 'RQ CONFORME',
-                                  style: styleNormal.copyWith(
-                                      color: (e < 0)
-                                          ? Colors.red
-                                          : Colors.green[900]),
-                                ))
+                                DataCell(Center(
+                                  child: Text(
+                                    planning.parlo1[i][1],
+                                    style: styleNormal.copyWith(
+                                      color: color.background,
+                                    ),
+                                  ),
+                                )),
                               ],
+                            );
+                          }).toList(),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: color.onPrimaryContainer,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: DataTable(
+                        columns: [
+                          DataColumn(
+                              label: Center(
+                            child: Text(
+                              'VALOR',
+                              style: styleNormal.copyWith(
+                                color: color.background,
+                              ),
                             ),
-                          )
-                          .toList(),
-                    ],
-                  ),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            'DIFERENCIA',
+                            style: styleNormal.copyWith(
+                              color: color.background,
+                            ),
+                          ))
+                        ],
+                        rows: [
+                          ...Iterable<int>.generate(resul2.length).map((i) {
+                            return DataRow(
+                              cells: [
+                                DataCell(Center(
+                                  child: Text(
+                                    '${resul2[i]}',
+                                    style: styleNormal.copyWith(
+                                      color: (resul2[i] < 0)
+                                          ? Colors.red
+                                          : Colors.green[900],
+                                    ),
+                                  ),
+                                )),
+                                DataCell(
+                                  Text(
+                                    (resul2[i] < 0)
+                                        ? 'FALTA QR'
+                                        : 'RQ CONFORME',
+                                    style: styleNormal.copyWith(
+                                        color: (resul2[i] < 0)
+                                            ? Colors.red
+                                            : Colors.green[900]),
+                                  ),
+                                )
+                              ],
+                            );
+                          }).toList(),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: color.onPrimaryContainer,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: DataTable(
+                        columns: [
+                          DataColumn(label: Text('ISLA', style: styleTitle)),
+                          DataColumn(label: Text('VALOR', style: styleTitle)),
+                        ],
+                        rows: [
+                          ...Iterable<int>.generate(resul2.length).map((i) {
+                            return DataRow(
+                              cells: [
+                                DataCell(Center(
+                                  child: Text(
+                                    planning.parlo2?[i][0] ?? '---',
+                                    style: styleNormal.copyWith(
+                                      color: color.background,
+                                    ),
+                                  ),
+                                )),
+                                DataCell(Center(
+                                  child: Text(
+                                    planning.parlo2?[i][1] ?? '---',
+                                    style: styleNormal.copyWith(
+                                      color: color.background,
+                                    ),
+                                  ),
+                                )),
+                              ],
+                            );
+                          }).toList(),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

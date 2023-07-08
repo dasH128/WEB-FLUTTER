@@ -12,39 +12,6 @@ class WorkersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<WorkerEntity> workers = [
-      WorkerEntity(
-        nombre: 'Jeferson 1',
-        apellido: 'Quinto Povis',
-        dni: '12345678',
-        correo: 'jeferson1@gmail.com',
-      ),
-      WorkerEntity(
-        nombre: 'Jeferson 2',
-        apellido: 'Quinto Povis',
-        dni: '12345678',
-        correo: 'jeferson1@gmail.com',
-      ),
-      WorkerEntity(
-        nombre: 'Jeferson 3',
-        apellido: 'Quinto Povis',
-        dni: '12345678',
-        correo: 'jeferson1@gmail.com',
-      ),
-      WorkerEntity(
-        nombre: 'Jeferson 4',
-        apellido: 'Quinto Povis',
-        dni: '12345678',
-        correo: 'jeferson1@gmail.com',
-      ),
-      WorkerEntity(
-        nombre: 'Jeferson 5',
-        apellido: 'Quinto Povis',
-        dni: '12345678',
-        correo: 'jeferson1@gmail.com',
-      ),
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Trabajadores'),
@@ -80,7 +47,7 @@ class WorkersScreen extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                child: _TableDataWorkers(workers: workers),
+                child: _TableDataWorkers(),
               ),
             )
           ],
@@ -91,10 +58,8 @@ class WorkersScreen extends StatelessWidget {
 }
 
 class _TableDataWorkers extends StatelessWidget {
-  final List<WorkerEntity> workers;
   const _TableDataWorkers({
     super.key,
-    required this.workers,
   });
 
   @override
@@ -127,10 +92,10 @@ class _TableDataWorkers extends StatelessWidget {
               DataColumn(
                 label: Text('Correo'),
               ),
-              DataColumn2(
-                fixedWidth: 100,
-                label: Text('Opciones'),
-              ),
+              // DataColumn2(
+              //   fixedWidth: 100,
+              //   label: Text('Opciones'),
+              // ),
             ],
             rows: [
               ...result.map(
@@ -139,16 +104,16 @@ class _TableDataWorkers extends StatelessWidget {
                   DataCell(Text(w.apellido)),
                   DataCell(Text(w.dni)),
                   DataCell(Text(w.correo)),
-                  DataCell(Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          context.push('/dashboard/trabajadores-crear');
-                        },
-                        icon: const Icon(Icons.info),
-                      )
-                    ],
-                  )),
+                  // DataCell(Row(
+                  //   children: [
+                  //     IconButton(
+                  //       onPressed: () {
+                  //         context.push('/dashboard/trabajadores-crear');
+                  //       },
+                  //       icon: const Icon(Icons.info),
+                  //     )
+                  //   ],
+                  // )),
                 ]),
               ),
             ],

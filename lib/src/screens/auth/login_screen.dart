@@ -97,7 +97,6 @@ class _ContainerForm extends ConsumerWidget {
   }
 
   Future<bool> login(correo, password) async {
-    print('c:$correo - p:$password');
     bool isValid = await BDRepository().login(correo, password);
     return isValid;
   }

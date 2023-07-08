@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sistema_web/src/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -40,14 +39,14 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   _MenuOption(
                     svgSrc: "assets/icons/menu_dashboard.svg",
-                    option: 'PROGRAMACIÓN',
+                    option: 'PROGRAMACIÓN ATENTO',
                     press: () {
                       context.go('/dashboard/programaciones');
                     },
                   ),
                   _MenuOption(
                     svgSrc: "assets/icons/menu_task.svg",
-                    option: 'PLANIFICACIÓN',
+                    option: 'PLANIFICACIÓN FCOM',
                     press: () {
                       context.go('/dashboard/planificaciones');
                     },
@@ -66,13 +65,6 @@ class HomeScreen extends StatelessWidget {
                       context.go('/dashboard/trabajadores');
                     },
                   ),
-                  // _MenuOption(
-                  //   svgSrc: "assets/icons/menu_doc.svg",
-                  //   option: 'TURNOS',
-                  //   press: () {
-                  //     context.go('/dashboard/usuarios');
-                  //   },
-                  // ),
                   _MenuOption(
                     svgSrc: "assets/icons/menu_dashboard.svg",
                     option: 'GESTIÓN',
@@ -89,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   _MenuOption(
                     svgSrc: "assets/icons/menu_dashboard.svg",
-                    option: 'DASHBOARD',
+                    option: 'PROG vs PLAN',
                     press: () {
                       context.go('/dashboard/grafica');
                     },

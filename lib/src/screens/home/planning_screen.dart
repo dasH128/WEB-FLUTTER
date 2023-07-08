@@ -74,7 +74,7 @@ class _TableDataPlanning extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           List<PlanningEntity> result = snapshot.data!;
-          
+
           return DataTable2(
             columnSpacing: 12,
             horizontalMargin: 12,
@@ -88,12 +88,9 @@ class _TableDataPlanning extends StatelessWidget {
               DataColumn2(
                 label: Text('Fecha'),
               ),
-              // DataColumn(
-              //   label: Text('DNI'),
-              // ),
-              // DataColumn(
-              //   label: Text('Correo'),
-              // ),
+              DataColumn2(
+                label: Text('Fecha2'),
+              ),
               DataColumn2(
                 fixedWidth: 100,
                 label: Text('Opciones'),
@@ -104,6 +101,7 @@ class _TableDataPlanning extends StatelessWidget {
                 (w) => DataRow(cells: [
                   DataCell(Text(w.asunto)),
                   DataCell(Text(w.fecha)),
+                  DataCell(Text(w.fecha2 ?? '')),
                   // DataCell(Text(w.dni)),
                   // DataCell(Text(w.correo)),
                   DataCell(Row(
