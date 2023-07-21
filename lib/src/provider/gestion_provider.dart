@@ -1,6 +1,60 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sistema_web/src/entities/entities.dart';
 
+var horarioGeneral = Provider<List<ScheduleGeneralEntity>>((ref) => [
+      ScheduleGeneralEntity(
+        tipo: 'call',
+        nomenclatura: 'FCOM_CL',
+        bu: 'FCOM_CHILE',
+        iniDay: '08:00',
+        finDay: '12:00',
+        iniSat: '08:00',
+        finSat: '12:00',
+        iniDom: '08:00',
+        finDom: '12:00',
+        iniFes: '08:00',
+        finFes: '12:00',
+      ),
+      ScheduleGeneralEntity(
+        tipo: 'call',
+        nomenclatura: 'FCOM_CL',
+        bu: 'FCOM_CHILE',
+        iniDay: '08:00',
+        finDay: '12:00',
+        iniSat: '08:00',
+        finSat: '12:00',
+        iniDom: '08:00',
+        finDom: '12:00',
+        iniFes: '08:00',
+        finFes: '12:00',
+      ),
+      ScheduleGeneralEntity(
+        tipo: 'call',
+        nomenclatura: 'FCOM_CL',
+        bu: 'FCOM_CHILE',
+        iniDay: '08:00',
+        finDay: '12:00',
+        iniSat: '08:00',
+        finSat: '12:00',
+        iniDom: '08:00',
+        finDom: '12:00',
+        iniFes: '08:00',
+        finFes: '12:00',
+      ),
+      ScheduleGeneralEntity(
+        tipo: 'call',
+        nomenclatura: 'FCOM_CL',
+        bu: 'FCOM_CHILE',
+        iniDay: '08:00',
+        finDay: '12:00',
+        iniSat: '08:00',
+        finSat: '12:00',
+        iniDom: '08:00',
+        finDom: '12:00',
+        iniFes: '08:00',
+        finFes: '12:00',
+      ),
+    ]);
 var modalityProvider = Provider<List<ModalityEntity>>(
   (ref) => [
     ModalityEntity(id: '1', nombre: 'PRESENCIAL'),

@@ -36,6 +36,14 @@ final appRouter = GoRouter(
           },
         ),
         GoRoute(
+          path: 'trabajadores-editar',
+          builder: (context, state) {
+            return WorkerEditScreen(
+              worker: (state.extra as WorkerEntity),
+            );
+          },
+        ),
+        GoRoute(
           path: 'programacion-crear',
           builder: (context, state) {
             return ProgramationAddScreen(

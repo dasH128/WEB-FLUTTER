@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sistema_web/src/entities/entities.dart';
 import 'package:sistema_web/src/provider/login_provider.dart';
 import 'package:sistema_web/src/repositories/bd_repository.dart';
 import 'package:sistema_web/src/widgets/widgets.dart';
@@ -74,12 +74,17 @@ class _ContainerForm extends ConsumerWidget {
               : ButtonStyle1Widget(
                   text: 'Login',
                   onPressed: () async {
+                    if (email.isEmpty || passw.isEmpty) {
+                      ShowAlertCustomer(context, 'Complete los campos');
+                      return;
+                    }
+
                     ref
                         .read(isLoadingProvider.notifier)
                         .update((state) => true);
                     await Future.delayed(const Duration(seconds: 1));
-                    bool isValid = await login(email, passw);
-                    if (isValid) {
+                    LoginResponse res = await login(email, passw);
+                    if (res.auth) {
                       ref
                           .read(isLoadingProvider.notifier)
                           .update((state) => false);
@@ -88,6 +93,8 @@ class _ContainerForm extends ConsumerWidget {
                       ref
                           .read(isLoadingProvider.notifier)
                           .update((state) => false);
+
+                      ShowAlertCustomer(context, res.message!);
                     }
                   },
                 )
@@ -96,8 +103,27 @@ class _ContainerForm extends ConsumerWidget {
     );
   }
 
-  Future<bool> login(correo, password) async {
-    bool isValid = await BDRepository().login(correo, password);
-    return isValid;
+  ShowAlertCustomer(context, String msm) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Ocurrio un error'),
+          content: Text(msm),
+          actions: [
+            FilledButton(
+                onPressed: () {
+                  context.pop();
+                },
+                child: const Text('OK')),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<LoginResponse> login(correo, password) async {
+    LoginResponse res = await BDRepository().login(correo, password);
+    return res;
   }
 }

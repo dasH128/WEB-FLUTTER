@@ -92,21 +92,32 @@ class BDRepository {
     }
   }
 
-  Future<bool> login(correo, password) async {
+//   {
+//   "name": "jeferson",
+//   "lastname": "quinto povis",
+//   "username": "jeferQPqq",
+//   "email": "jeferson323@gmail.com",
+//   "password": "1234567890"
+// }
+  Future<LoginResponse> login(correo, password) async {
     await Future.delayed(const Duration(seconds: 1));
     try {
+      print('init DIO');
       final response = await dio
           .post('/auth/login', data: {"email": correo, "password": password});
-
+      print('response');
       print(response.data);
-      return true;
+      LoginResponse res = LoginResponse.fromJson(response.data);
+      print('LoginResponse');
+      print(res);
+      return res;
     } catch (e) {
       if (e is DioException) {
         print(e.message);
       } else {
         print(e);
       }
-      return false;
+      return LoginResponse(auth: false, message: e.toString());
     }
     // return true;
   }

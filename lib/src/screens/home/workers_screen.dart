@@ -92,10 +92,10 @@ class _TableDataWorkers extends StatelessWidget {
               DataColumn(
                 label: Text('Correo'),
               ),
-              // DataColumn2(
-              //   fixedWidth: 100,
-              //   label: Text('Opciones'),
-              // ),
+              DataColumn2(
+                fixedWidth: 100,
+                label: Text('Opciones'),
+              ),
             ],
             rows: [
               ...result.map(
@@ -104,16 +104,17 @@ class _TableDataWorkers extends StatelessWidget {
                   DataCell(Text(w.apellido)),
                   DataCell(Text(w.dni)),
                   DataCell(Text(w.correo)),
-                  // DataCell(Row(
-                  //   children: [
-                  //     IconButton(
-                  //       onPressed: () {
-                  //         context.push('/dashboard/trabajadores-crear');
-                  //       },
-                  //       icon: const Icon(Icons.info),
-                  //     )
-                  //   ],
-                  // )),
+                  DataCell(Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          context.push('/dashboard/trabajadores-editar',
+                              extra: w);
+                        },
+                        icon: const Icon(Icons.edit),
+                      )
+                    ],
+                  )),
                 ]),
               ),
             ],
