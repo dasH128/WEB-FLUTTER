@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sistema_web/src/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -37,49 +38,49 @@ class HomeScreen extends StatelessWidget {
                   mainAxisExtent: 200,
                 ),
                 children: [
-                  _MenuOption(
+                  MenuOptionWidget(
                     svgSrc: "assets/icons/menu_dashboard.svg",
                     option: 'PROGRAMACIÓN ATENTO',
                     press: () {
                       context.go('/dashboard/programaciones');
                     },
                   ),
-                  _MenuOption(
+                  MenuOptionWidget(
                     svgSrc: "assets/icons/menu_task.svg",
                     option: 'PLANIFICACIÓN FCOM',
                     press: () {
                       context.go('/dashboard/planificaciones');
                     },
                   ),
-                  _MenuOption(
+                  MenuOptionWidget(
                     svgSrc: "assets/icons/menu_dashboard.svg",
                     option: 'ISLAS',
                     press: () {
                       context.go('/dashboard/islas');
                     },
                   ),
-                  _MenuOption(
+                  MenuOptionWidget(
                     svgSrc: "assets/icons/menu_doc.svg",
                     option: 'PERSONAL',
                     press: () {
                       context.go('/dashboard/trabajadores');
                     },
                   ),
-                  _MenuOption(
+                  MenuOptionWidget(
                     svgSrc: "assets/icons/menu_dashboard.svg",
                     option: 'GESTIÓN',
                     press: () {
                       context.go('/dashboard/gestiones');
                     },
                   ),
-                  _MenuOption(
+                  MenuOptionWidget(
                     svgSrc: "assets/icons/menu_dashboard.svg",
                     option: 'ASISTENCIA',
                     press: () {
                       context.go('/dashboard/asistencia');
                     },
                   ),
-                  _MenuOption(
+                  MenuOptionWidget(
                     svgSrc: "assets/icons/menu_dashboard.svg",
                     option: 'PROG vs PLAN',
                     press: () {
@@ -92,52 +93,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       )),
-    );
-  }
-}
-
-class _MenuOption extends StatelessWidget {
-  final String option;
-  final String? svgSrc;
-  final void Function() press;
-
-  const _MenuOption({
-    required this.option,
-    required this.press,
-    this.svgSrc = 'assets/icons/menu_task.svg',
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme;
-    return GestureDetector(
-      onTap: press,
-      child: Container(
-        margin: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: color.onPrimaryContainer,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              svgSrc!,
-              colorFilter: ColorFilter.mode(color.onSecondary, BlendMode.srcIn),
-              height: 46,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              option,
-              style: TextStyle(
-                color: color.background,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

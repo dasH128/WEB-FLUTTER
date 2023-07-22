@@ -1,3 +1,5 @@
+export 'package:sistema_web/src/widgets/menu_option_widget.dart';
+
 export 'package:sistema_web/src/widgets/text_date_style1_widget.dart';
 
 export 'package:sistema_web/src/widgets/text_option_style1_widget.dart';

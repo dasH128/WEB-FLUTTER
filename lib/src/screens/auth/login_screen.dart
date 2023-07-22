@@ -88,7 +88,11 @@ class _ContainerForm extends ConsumerWidget {
                       ref
                           .read(isLoadingProvider.notifier)
                           .update((state) => false);
-                      context.go('/dashboard');
+                      if (res.rol == 'admin') {
+                        context.go('/dashboard');
+                      } else {
+                        context.go('/menu-user');
+                      }
                     } else {
                       ref
                           .read(isLoadingProvider.notifier)

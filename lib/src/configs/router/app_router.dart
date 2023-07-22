@@ -95,5 +95,13 @@ final appRouter = GoRouter(
         ),
       ],
     ),
+    GoRoute(path: '/menu-user',
+      builder: (context, state) {
+        return const MenuUserScreen();
+      },
+      routes: [
+
+      ]
+      )
   ],
 );

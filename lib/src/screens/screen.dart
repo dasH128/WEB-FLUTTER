@@ -1,3 +1,4 @@
+export 'package:sistema_web/src/screens/menu_user/menu_user_screen.dart';
 export 'package:sistema_web/src/screens/home/gestions_screen.dart';
 export 'package:sistema_web/src/screens/home/planning_add_screen.dart';
 export 'package:sistema_web/src/screens/home/planning_screen.dart';
