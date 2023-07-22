@@ -29,9 +29,12 @@ class _ContainerForm extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool isLoading = ref.watch(isLoadingProvider);
+    String email = ref.watch(emailProvider);
+    String password = ref.watch(passwordProvider);
+
     final color = Theme.of(context).colorScheme;
-    String passw = '';
-    String email = '';
+    // String passw = '';
+    // String email = '';
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(16),
@@ -54,7 +57,8 @@ class _ContainerForm extends ConsumerWidget {
             prefixIcon: const Icon(Icons.person_rounded),
             label: 'Correo',
             onChanged: (p0) {
-              email = p0;
+              //email = p0;
+              ref.read(emailProvider.notifier).update((state) => p0);
             },
           ),
           const SizedBox(height: 30),
@@ -63,7 +67,8 @@ class _ContainerForm extends ConsumerWidget {
             label: 'Password',
             obscureText: true,
             onChanged: (p0) {
-              passw = p0;
+              // passw = p0;
+              ref.read(passwordProvider.notifier).update((state) => p0);
             },
           ),
           const SizedBox(height: 30),
@@ -74,7 +79,7 @@ class _ContainerForm extends ConsumerWidget {
               : ButtonStyle1Widget(
                   text: 'Login',
                   onPressed: () async {
-                    if (email.isEmpty || passw.isEmpty) {
+                    if (email.isEmpty || password.isEmpty) {
                       ShowAlertCustomer(context, 'Complete los campos');
                       return;
                     }
@@ -83,7 +88,7 @@ class _ContainerForm extends ConsumerWidget {
                         .read(isLoadingProvider.notifier)
                         .update((state) => true);
                     await Future.delayed(const Duration(seconds: 1));
-                    LoginResponse res = await login(email, passw);
+                    LoginResponse res = await login(email, password);
                     if (res.auth) {
                       ref
                           .read(isLoadingProvider.notifier)
