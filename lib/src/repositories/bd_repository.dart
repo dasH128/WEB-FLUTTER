@@ -36,13 +36,21 @@ class BDRepository {
     }
   }
 
-  Future createWorker(Map<String, String> data) async {
+  Future<Map<String, dynamic>> createWorker(Map<String, String> data) async {
     print(data);
+    Map<String, dynamic> res = {};
     try {
-      var f = await dio.post('/worker', data: data);
-      print('f: ${f.toString()}');
+      Response<dynamic> f = await dio.post('/worker', data: data);
+      print('fffffffffffff');
+      print(f);
+      res['status'] = f.data['status'];
+      res['operation'] = f.data['operation'];
+      res['message'] = f.data['message'] ?? '';
+      print('createWorker -GOD: ${f.toString()}');
+      return res;
     } catch (e) {
-      print('e: ${e.toString()}');
+      print('createWorker -BAD: ${e.toString()}');
+      return {"status": 200, "operation": false, "message": e.toString()};
     }
   }
 

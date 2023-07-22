@@ -17,6 +17,11 @@ class WorkerAddScreen extends ConsumerWidget {
     // var islaOfWorker = ref.watch(islaOfWorkerProvider);
     // print('islaOF $islaOfWorker');
     var islaOfWorker = ref.watch(islaOfWorkerProvider);
+    var nameOfWorker = ref.watch(nameOfWorkerProvider);
+    var lastNameOfWorker = ref.watch(lastNameOfWorkerProvider);
+    var emailOfWorker = ref.watch(emailOfWorkerProvider);
+    var dniOfWorker = ref.watch(dniOfWorkerProvider);
+
     final border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(15),
     );
@@ -46,7 +51,8 @@ class WorkerAddScreen extends ConsumerWidget {
               label: 'Nombre',
               hint: 'Ingrese un nombre',
               onChanged: (p0) {
-                nombre = p0;
+                // nombre = p0;
+                ref.read(nameOfWorkerProvider.notifier).update((state) => p0);
               },
             ),
             const SizedBox(height: 16),
@@ -55,7 +61,9 @@ class WorkerAddScreen extends ConsumerWidget {
               label: 'Apellidos',
               hint: 'Ingrese apellidos',
               onChanged: (p0) {
-                apellido = p0;
+                ref
+                    .read(lastNameOfWorkerProvider.notifier)
+                    .update((state) => p0);
               },
             ),
             const SizedBox(height: 16),
@@ -64,7 +72,7 @@ class WorkerAddScreen extends ConsumerWidget {
               label: 'Dni',
               hint: 'Ingrese dni',
               onChanged: (p0) {
-                dni = p0;
+                ref.read(dniOfWorkerProvider.notifier).update((state) => p0);
               },
             ),
             const SizedBox(height: 16),
@@ -73,7 +81,7 @@ class WorkerAddScreen extends ConsumerWidget {
               label: 'Correo',
               hint: 'Ingrese correo',
               onChanged: (p0) {
-                correo = p0;
+                ref.read(emailOfWorkerProvider.notifier).update((state) => p0);
               },
             ),
             const SizedBox(height: 16),
@@ -139,14 +147,19 @@ class WorkerAddScreen extends ConsumerWidget {
               text: 'Crear',
               onPressed: () async {
                 Map<String, String> data = {
-                  'nombre': nombre,
-                  'apellido': apellido,
-                  'dni': dni,
-                  'correo': correo,
+                  'nombre': nameOfWorker,
+                  'apellido': lastNameOfWorker,
+                  'dni': dniOfWorker,
+                  'correo': emailOfWorker,
                   'isla': islaOfWorker,
                 };
-                await crearWorker(data);
-                context.pop();
+                var res = await crearWorker(data);
+                print('ressss ${res['operation']}');
+                if (res['operation'] == false) {
+                  await _ShowAlertCustomer(context, res['message']);
+                } else {
+                  context.pop();
+                }
               },
             )
           ],
@@ -156,10 +169,32 @@ class WorkerAddScreen extends ConsumerWidget {
   }
 
   Future crearWorker(Map<String, String> data) async {
-    await BDRepository().createWorker(data);
+    print(data);
+    Map<String, dynamic> bd = await BDRepository().createWorker(data);
+    print(bd);
+    return bd;
   }
 
   Future listarWorkers() async {
     await BDRepository().getWorkers();
+  }
+
+  _ShowAlertCustomer(context, String msm) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Ocurrio un error'),
+          content: Text(msm),
+          actions: [
+            FilledButton(
+                onPressed: () {
+                  context.pop();
+                },
+                child: const Text('OK')),
+          ],
+        );
+      },
+    );
   }
 }
